@@ -9,9 +9,8 @@ import { toast } from 'react-toastify';
 
 const UserList = () => {
 	const { data: users, refetch, isLoading, error } = useGetUsersQuery();
-	const { deleteUser } = useDeleteUserMutation();
-	const { updateUser } = useUpdateUserMutation();
-
+	const [deleteUser] = useDeleteUserMutation();
+	const [updateUser] = useUpdateUserMutation();
 	const [editableUserId, setEditableUserId] = useState(null);
 	const [editableUserName, setEditableUserName] = useState('');
 	const [editableUserEmail, setEditableUserEmail] = useState('');
@@ -20,13 +19,42 @@ const UserList = () => {
 		refetch();
 	}, [refetch]);
 
+	const deleteHandler = async (id) => {
+		if (window.confirm('Are you sure?')) {
+			try {
+				await deleteUser(id).unwrap();
+				refetch();
+				toast.success('User deleted successfully');
+			} catch (error) {
+				toast.error(error.data.message);
+			}
+		}
+	};
+
+	const toggleEdit = (id, name, email) => {
+		setEditableUserId(id);
+		setEditableUserName(name);
+		setEditableUserEmail(email);
+	};
+
+	const updateHandler = async (id) => {
+		try {
+			await updateUser({ userId: id, username: editableUserName, email: editableUserEmail });
+			setEditableUserId(null);
+			refetch();
+			toast.success('User updated successfully');
+		} catch (error) {
+			toast.error(error.data.message);
+		}
+	};
+
 	return (
 		<div className='p-4'>
 			<h1 className='text-2xl font-semibold mb-4'></h1>
 			{isLoading ? (
 				<Loader />
 			) : error ? (
-				<Message variant='danger'>{error?.data?.message || error?.error}</Message>
+				<Message variant='danger'>{error?.data?.message || error.error}</Message>
 			) : (
 				<div className='flex flex-col md:flex-row'>
 					{/* <AdminMenu /> */}
@@ -37,13 +65,83 @@ const UserList = () => {
 								<th className='px-4 py-2 text-left'>NAME</th>
 								<th className='px-4 py-2 text-left'>EMAIL</th>
 								<th className='px-4 py-2 text-left'>ADMIN</th>
-								<th className='px-4 py-2 text-left'></th>
+								<th className='px-4 py-2'></th>
 							</tr>
 						</thead>
 						<tbody>
-							{users?.map((user) => (
+							{users.map((user) => (
 								<tr key={user._id}>
 									<td className='px-4 py-2'>{user._id}</td>
+									<td className='px-4 py-2'>
+										{editableUserId === user._id ? (
+											<div className='flex items-center'>
+												<input
+													type='text'
+													className='w-full p-2 border rounded-lg'
+													value={editableUserName}
+													onChange={(e) => setEditableUserName(e.target.value)}
+												/>
+												<button onClick={() => updateHandler(user._id)} className='ml-2 bg-violet-400 py-2 px-4 rounded-lg'>
+													<FaCheck className='ml-1[rem]' />
+												</button>
+											</div>
+										) : (
+											<div className='flex items-center'>
+												<p className='w-3/5'>{user.username}</p>
+												<button
+													onClick={() => toggleEdit(user._id, user.username, user.email)}
+													className='ml-2 bg-violet-400 py-2 px-4 rounded-lg'
+												>
+													<FaEdit className='ml-1[rem]' />
+												</button>
+											</div>
+										)}
+									</td>
+									<td className='px-4 py-2'>
+										{editableUserId === user._id ? (
+											<div className='flex items-center'>
+												<input
+													className='w-full p-2 border rounded-lg'
+													type='text'
+													value={editableUserEmail}
+													onChange={(e) => setEditableUserEmail(e.target.value)}
+												/>
+												<button className='ml-2 bg-violet-400 py-2 px-4 rounded-lg' onClick={() => updateHandler(user._id)}>
+													<FaCheck className='ml-1[rem]' />
+												</button>
+											</div>
+										) : (
+											<div className='flex items-center'>
+												<p className='w-3/5'>{user.email}</p>
+												<button
+													onClick={() => toggleEdit(user._id, user.username, user.email)}
+													className='ml-2 bg-violet-400 py-2 px-4 rounded-lg'
+												>
+													<FaEdit className='ml-1[rem]' />
+												</button>
+											</div>
+										)}
+									</td>
+									<td className='px-4 py-2'>
+										{user.isAdmin ? (
+											<div className='flex items-center'>
+												<FaCheck className='text-green-600' />
+											</div>
+										) : (
+											<div className='flex items-center'>
+												<FaTimes className='text-red-600' />
+											</div>
+										)}
+									</td>
+									<td className='px-4 py-2'>
+										{!user.isAdmin && (
+											<div className='flex items-center'>
+												<button onClick={() => deleteHandler(user._id)} className='ml-2 bg-red-500 text-white py-2 px-3 rounded-lg'>
+													<FaTrash />
+												</button>
+											</div>
+										)}
+									</td>
 								</tr>
 							))}
 						</tbody>

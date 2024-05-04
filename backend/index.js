@@ -3,6 +3,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
 const app = express();
+const categoryRoutes = require('./routes/categoryRoutes');
 
 //routes
 const userRoutes = require('./routes/userRoutes');
@@ -17,6 +18,7 @@ app.use(cookieParser());
 
 //routes
 app.use('/api/users', userRoutes);
+app.use('/api/category', categoryRoutes);
 
 //listen to server x
 const port = process.env.PORT || 3000;

@@ -92,8 +92,35 @@ const logoutCurrentUser = asyncHandler(async (req, res) => {
 });
 
 const getAllUsers = asyncHandler(async (req, res) => {
-	const users = await User.find({});
-	res.status(200).json(users);
+	//for returning all users + search api for the users
+
+	const { username, email, isAdmin } = req.query;
+
+	const query = {};
+
+	if (username) {
+		query.username = { $regex: new RegExp(username, 'i') };
+	}
+	if (email) {
+		query.email = { $regex: new RegExp(email, 'i') };
+	}
+	if (isAdmin !== undefined) {
+		query.isAdmin = isAdmin === 'true';
+	}
+
+	const users = await User.find(query).select('-password');
+
+	if (users.length === 0) {
+		return res.status(404).json({
+			success: false,
+			message: 'No users found matching the search criteria.',
+		});
+	}
+
+	res.json({
+		success: true,
+		users,
+	});
 });
 
 const getCurrentUserProfile = asyncHandler(async (req, res) => {

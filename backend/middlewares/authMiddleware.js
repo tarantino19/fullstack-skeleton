@@ -5,7 +5,7 @@ const asyncHandler = require('./asyncHandler');
 const authenticate = asyncHandler(async (req, res, next) => {
 	let token;
 
-	//read JWT from jwt cookie
+	//read JWT from jwt cookie - possible via cookie-parser
 	token = req.cookies.jwt;
 
 	if (token) {

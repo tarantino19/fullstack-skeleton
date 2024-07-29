@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 // import AdminMenu from "./AdminMenu";
 
 const UserList = () => {
-	const { data: users, refetch, isLoading, error } = useGetUsersQuery();
+	const { data, refetch, isLoading, error } = useGetUsersQuery();
 	const [deleteUser] = useDeleteUserMutation();
 	const [updateUser] = useUpdateUserMutation();
 	const [editableUserId, setEditableUserId] = useState(null);
@@ -17,6 +17,7 @@ const UserList = () => {
 
 	useEffect(() => {
 		refetch();
+		console.log(users);
 	}, [refetch]);
 
 	const deleteHandler = async (id) => {
@@ -47,6 +48,8 @@ const UserList = () => {
 			toast.error(error.data.message);
 		}
 	};
+
+	const users = data?.users || [];
 
 	return (
 		<div className='p-4'>

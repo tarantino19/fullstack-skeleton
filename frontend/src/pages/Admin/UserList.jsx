@@ -6,6 +6,8 @@ import { useDeleteUserMutation, useGetUsersQuery, useUpdateUserMutation } from '
 import { toast } from 'react-toastify';
 // ⚠️⚠️⚠️ don't forget this ⚠️⚠️⚠️⚠️
 // import AdminMenu from "./AdminMenu";
+import useSWR from 'swr';
+import { fetcher } from '../../utils/Fetcher';
 
 const UserList = () => {
 	const { data, refetch, isLoading, error } = useGetUsersQuery();
@@ -14,6 +16,7 @@ const UserList = () => {
 	const [editableUserId, setEditableUserId] = useState(null);
 	const [editableUserName, setEditableUserName] = useState('');
 	const [editableUserEmail, setEditableUserEmail] = useState('');
+	const singleUser = useSWR('/api/users/profile', fetcher); //testing useSWR - to access: do - singleUser.data.properties
 
 	useEffect(() => {
 		refetch();
@@ -59,8 +62,10 @@ const UserList = () => {
 			) : error ? (
 				<Message variant='danger'>{error?.data?.message || error.error}</Message>
 			) : (
-				<div className='flex flex-col md:flex-row'>
-					{/* <AdminMenu /> */}
+				<div className='px-10 py-2'>
+					<div className='pl-12 mb-4'>
+						<div>You are logged in as {singleUser.data?.username}</div>
+					</div>
 					<table className='w-full md:w-4/5 mx-auto'>
 						<thead>
 							<tr>

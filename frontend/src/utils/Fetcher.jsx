@@ -6,3 +6,17 @@ export const fetcher = async (url) => {
 	}
 	return response.json();
 };
+
+export const updateFetcher = async (url, data) => {
+	const response = await fetch(url, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify(data),
+	});
+	if (!response.ok) {
+		throw new Error('Failed to update');
+	}
+	return response.json();
+};

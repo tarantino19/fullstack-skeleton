@@ -1,6 +1,7 @@
 const Order = require('../models/orderModel');
 const Product = require('../models/productModel');
 const asyncHandler = require('../middlewares/asyncHandler');
+const mongoose = require('mongoose'); // Import mongoose
 
 //Utility function
 const calculatePrice = (orderItems) => {
@@ -144,39 +145,59 @@ const findOrderById = asyncHandler(async (req, res) => {
 
 const markOrderAsPaid = asyncHandler(async (req, res) => {
 	try {
-		const order = await Order.findById(req.params.id);
+		// Get and sanitize the order ID
+		const orderId = req.params.id.trim();
+		console.log('Order ID:', orderId);
+
+		// Validate ObjectId
+		if (!mongoose.Types.ObjectId.isValid(orderId)) {
+			return res.status(400).json({ message: 'Invalid order ID format' });
+		}
+
+		// Find the order by ID
+		const order = await Order.findById(orderId);
 		if (!order) {
 			return res.status(404).json({ message: 'Order not found' });
 		}
+
+		// Update order details
 		order.isPaid = true;
 		order.paidAt = Date.now();
 
-		order.paymentResult = {
-			id: req.body.id,
-			status: req.body.status,
-			update_time: req.body.update_time,
-			email_address: req.body.payer.email_address,
-		};
+		// Save updated order
+		const updatedOrder = await order.save();
 
-		const updateOrder = await order.save();
-
-		res.status(200).json(updateOrder);
+		res.status(200).json(updatedOrder);
 	} catch (error) {
+		console.error('Error in markOrderAsPaid:', error); // Log detailed error
 		res.status(400).json({ error: error.message });
 	}
 });
 
 const markOrderAsDelivered = asyncHandler(async (req, res) => {
 	try {
-		const order = await Order.findById(req.params.id);
+		// Sanitize and validate ObjectId
+		const orderId = req.params.id.trim();
+		if (!mongoose.Types.ObjectId.isValid(orderId)) {
+			return res.status(400).json({ message: 'Invalid order ID format' });
+		}
+
+		// Find the order by ID
+		const order = await Order.findById(orderId);
 		if (!order) {
 			return res.status(404).json({ message: 'Order not found' });
 		}
+
+		// Update order details
 		order.isDelivered = true;
 		order.deliveredAt = Date.now();
+
+		// Save updated order
 		const updatedOrder = await order.save();
+
 		res.status(200).json(updatedOrder);
 	} catch (error) {
+		console.error('Error in markOrderAsDelivered:', error); // Log detailed error
 		res.status(400).json({ error: error.message });
 	}
 });

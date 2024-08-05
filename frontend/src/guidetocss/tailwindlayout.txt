@@ -1,0 +1,60 @@
+This is a simple guide to creating Tailwind CSS layouts in React for our app.
+
+Majority of the tailwind layout for this app is based on CSS grid.
+watch this 30 minute video for a quick crash course:
+https://www.youtube.com/watch?v=rbSPe1tJowY&t=473s
+
+Copy paste the css code below one by one to see how it looks like in the browser.
+
+https://play.tailwindcss.com/
+
+<!-- <div class="m-4 grid grid-cols-2 gap-4 sm:grid-cols-2">
+  <div class="min-h-[100px] rounded-lg bg-orange-600 shadow"></div>
+  <div class="min-h-[100px] rounded-lg bg-teal-600 shadow"></div>
+</div> -->
+<!-- 
+<div class="m-4 grid gap-4 sm:grid-cols-3">
+  <div class="min-h-[100px] rounded-lg bg-orange-600 shadow"></div>
+  <div class="min-h-[100px] rounded-lg bg-teal-600 shadow"></div>
+  <div class="min-h-[100px] rounded-lg bg-red-600 shadow"></div>
+</div> -->
+
+<!-- <div class="m-4 grid gap-4 sm:grid-cols-4">
+  <div class="min-h-[150px] rounded-lg bg-orange-600 shadow"></div>
+  <div class="min-h-[150px] rounded-lg bg-teal-600 shadow"></div>
+  <div class="min-h-[150px] rounded-lg bg-red-600 shadow"></div>
+  <div class="min-h-[150px] rounded-lg bg-purple-600 shadow"></div>
+</div> -->
+
+<!-- <div class="m-4 grid gap-4 sm:grid-cols-2">
+  <div class="min-h-[150px] rounded-lg bg-orange-600 shadow"></div>
+  <div class="min-h-[150px] rounded-lg bg-teal-600 shadow"></div>
+</div> -->
+
+<!-- <div class="flex h-screen">
+  <div class="min-h-full w-1/5 gap-2 rounded-lg bg-orange-600 shadow"></div>
+  <div class="min-h-full w-4/5 rounded-lg bg-teal-600 shadow"></div>
+</div> -->
+
+<!-- 
+<div class="m-4 grid grid-cols-5 h-screen">
+  <div class="col-span-1 min-h-full rounded-lg bg-orange-600 shadow"></div>
+  <div class="col-span-4 min-h-full rounded-lg bg-teal-600 shadow"></div>
+</div> -->
+
+<!-- <div class="m-4 grid gap-2 sm:grid-cols-12">
+  <div class="min-h-[100px] rounded-lg bg-orange-600 shadow sm:col-span-4"></div>
+  <div class="min-h-[100px] rounded-lg bg-teal-600 shadow sm:col-span-8"></div>
+</div> -->
+
+<!-- <div class="m-4 grid gap-1 sm:grid-cols-12">
+  <div class="min-h-svh rounded-lg bg-orange-600 shadow sm:col-span-2"></div>
+  <div class="min-h-[100px] rounded-lg bg-teal-600 shadow sm:col-span-10"></div>
+</div> -->
+
+<!-- <div class="gap- m-4 grid gap-2 sm:grid-cols-12">
+  <div class="hidden min-h-[100px] rounded-lg bg-orange-600 sm:col-span-2 sm:block"></div>
+  <div class="min-h-[100px] rounded-lg bg-teal-600 sm:col-span-8"></div>
+  <div class="hidden min-h-[100px] rounded-lg bg-purple-600 sm:col-span-2 md:block"></div>
+</div> -->
+

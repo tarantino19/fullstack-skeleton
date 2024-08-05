@@ -209,9 +209,14 @@ const updateUserById = asyncHandler(async (req, res) => {
 	const user = await User.findById(req.params.id);
 
 	if (user) {
-		user.username = req.body.username || user.username;
-		user.email = req.body.email || user.email;
-		user.isAdmin = Boolean(req.body.isAdmin);
+		// Update only the fields that are provided in the request body
+		user.username = req.body.username !== undefined ? req.body.username : user.username;
+		user.email = req.body.email !== undefined ? req.body.email : user.email;
+
+		// Only update `isAdmin` if it's explicitly provided in the request body
+		if (req.body.isAdmin !== undefined) {
+			user.isAdmin = Boolean(req.body.isAdmin);
+		}
 
 		const updatedUser = await user.save();
 

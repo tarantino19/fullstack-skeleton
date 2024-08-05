@@ -33,7 +33,7 @@ router
 	.route('/:id')
 	.delete(authenticate, authorizeAdmin, deleteUserById)
 	.get(authenticate, authorizeAdmin, getUserById)
-	.put(authenticate, authorizeAdmin, updateUserById);
+	.patch(authenticate, authorizeAdmin, updateUserById);
 
 module.exports = router;
 //index uses the routes, routes uses the method + controller, controller uses the model

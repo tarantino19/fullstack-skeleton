@@ -1,7 +1,8 @@
 This is a simple guide to creating Tailwind CSS layouts in React for our app.
 
-Majority of the tailwind layout for this app is based on CSS grid.
-watch this 30 minute video for a quick crash course:
+Majority of the tailwind layout for this app is based on CSS grid instead if flexbox but feel free to use whatever is appropriate for the component you are trying to build.
+
+Watch this 30 minute video for a quick crash course:
 https://www.youtube.com/watch?v=rbSPe1tJowY&t=473s
 
 Copy paste the css code below one by one to see how it looks like in the browser.

@@ -6,8 +6,8 @@ import {
 	AiOutlineShoppingCart,
 	AiOutlineLogin,
 	AiOutlineUserAdd,
+	AiOutlineHeart,
 } from 'react-icons/ai';
-import { FaHeart } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import './Navigation.css';
 import { useNavigate } from 'react-router-dom';
@@ -51,12 +51,12 @@ function Navigation() {
 			<div className='flex flex-col justify-center space-y-4'>
 				<Link to='/' className='flex items-center transition-transform transform hover:translate-x-2'>
 					<AiOutlineHome className='mr-2 mt-[3rem]' size={26} />
-					<span className='hidden nav-item-name mt-[3rem]'>HOME</span>{' '}
+					<span className='hidden nav-item-name mt-[3rem]'>Home</span>{' '}
 				</Link>
 
 				<Link to='/shop' className='flex items-center transition-transform transform hover:translate-x-2'>
 					<AiOutlineShopping className='mr-2 mt-[3rem]' size={26} />
-					<span className='hidden nav-item-name mt-[3rem]'>SHOP</span>{' '}
+					<span className='hidden nav-item-name mt-[3rem]'>Shop</span>{' '}
 				</Link>
 
 				<Link to='/cart' className='flex relative'>
@@ -68,7 +68,7 @@ function Navigation() {
 
 				<Link to='/favorite' className='flex relative'>
 					<div className='flex justify-center items-center transition-transform transform hover:translate-x-2'>
-						<FaHeart className='mt-[3rem] mr-2' size={20} />
+						<AiOutlineHeart className='mt-[3rem] mr-2' size={20} />
 						<span className='hidden nav-item-name mt-[3rem]'>Favorites</span>
 					</div>
 				</Link>

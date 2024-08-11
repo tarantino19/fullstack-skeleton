@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 
 const generateToken = (res, userId) => {
 	const token = jwt.sign({ userId }, process.env.JWT_SECRET, {
-		expiresIn: '24h',
+		expiresIn: '30d',
 	});
 
 	//Set JWT to http cookie only
@@ -10,7 +10,7 @@ const generateToken = (res, userId) => {
 		httpOnly: true,
 		secure: process.env.NODE_ENV !== 'development',
 		sameSite: 'strict',
-		maxAge: 24,
+		maxAge: 24 * 60 * 60 * 1000,
 	});
 
 	return token;

@@ -1,0 +1,6 @@
+For this project, I will be using the following tools:
+1 - SWR for fetching data from the server.
+2 - Use useContext for global state management.
+3 - Tailwind css grid for layouts.
+
+//I started with redux when I started building the project, but Im gonna proceed with React Context for global state management instead.

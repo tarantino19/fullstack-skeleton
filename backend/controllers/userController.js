@@ -146,6 +146,30 @@ const getCurrentUserProfile = asyncHandler(async (req, res) => {
 
 const updateCurrentUserProfile = asyncHandler(async (req, res) => {
 	const user = await User.findById(req.user._id);
+	//this code
+	//const authenticate = asyncHandler(async (req, res, next) => {
+	// let token;
+	//read JWT from jwt cookie - possible via cookie-parser
+	// 	token = req.cookies.jwt;
+
+	// 	if (token) {
+	// 		try {
+	// 			const decoded = jwt.verify(token, process.env.JWT_SECRET);
+	// 			req.user = await User.findById(decoded.userId).select('-password');
+	// 			next();
+	// 		} catch (error) {
+	// 			res.status(401).json({
+	// 				success: false,
+	// 				message: 'Invalid token',
+	// 			});
+	// 		}
+	// 	} else {
+	// 		res.status(401).json({
+	// 			success: false,
+	// 			message: 'You are not logged in/No token provided',
+	// 		});
+	// 	}
+	// });
 	//we already got the req.user from the authMiddleware, so now we can just get the id via req.user._id
 	//no need to pass the specificId in the route because we're getting it from the req object after authenticqtion
 
